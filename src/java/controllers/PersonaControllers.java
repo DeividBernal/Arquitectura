@@ -12,7 +12,7 @@ package controllers;
 
 import co.edu.uniminuto.pa.DAOs.PersonaDAO;
 import co.edu.uniminuto.pa.DTOs.Persona;
-import co.edu.uniminuto.pa.bds.MySqlDataSource;
+import co.edu.uniminuto.pa.bds.PGPDataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,7 +52,7 @@ public class PersonaControllers {
             
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit1...");
 
-        int id = pDao.obtenerId(MySqlDataSource.getConexionBD());
+        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
         String ident = req.getParameter("identificacion");
         String nombre1 = req.getParameter("nombre1");
         String nombre2 = req.getParameter("nombre2");
@@ -77,7 +77,7 @@ public class PersonaControllers {
         p.setTelef(telef);
         p.setEmail(email);                                    
             
-        boolean insert = pDao.crearPersona(p, MySqlDataSource.getConexionBD());
+        boolean insert = pDao.crearPersona(p, PGPDataSource.getConexionBD());
 
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.SEVERE, null, "Registrar + " + ident + "-" + insert);
         
@@ -104,7 +104,7 @@ public class PersonaControllers {
             
         Logger.getLogger(PersonaDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit3...");
 
-        int id = pDao.obtenerId(MySqlDataSource.getConexionBD());
+        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
         String ident = req.getParameter("identificacion");
         String nombre1 = req.getParameter("nombre1");
         
@@ -113,7 +113,7 @@ public class PersonaControllers {
         p.setIdentificacion(ident);
         p.setNombre1(nombre1);
             
-        List<Persona> datos = pDao.consultarPersona(p, MySqlDataSource.getConexionBD());
+        List<Persona> datos = pDao.consultarPersona(p, PGPDataSource.getConexionBD());
 
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + ident + "-" + datos.size());
         
@@ -141,7 +141,7 @@ public class PersonaControllers {
             
         Logger.getLogger(PersonaDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit5...");
 
-        int id = pDao.obtenerId(MySqlDataSource.getConexionBD());
+        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
         String ident = req.getParameter("identificacion");
         String nombre1 = req.getParameter("nombre1");
         
@@ -150,7 +150,7 @@ public class PersonaControllers {
         p.setIdentificacion(ident);
         p.setNombre1(nombre1);
             
-        List<Persona> datos = pDao.consultarPersona(p, MySqlDataSource.getConexionBD());
+        List<Persona> datos = pDao.consultarPersona(p, PGPDataSource.getConexionBD());
 
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + ident + "-" + datos.size());
         
@@ -196,7 +196,7 @@ public class PersonaControllers {
         p.setTelef(telef);
         p.setEmail(email);
             
-        boolean res = pDao.editarPersona(p, MySqlDataSource.getConexionBD());                         
+        boolean res = pDao.editarPersona(p, PGPDataSource.getConexionBD());                         
         
         if (res)
             model.put("mensaje", "Se edito satisfactoriamente!!!");
