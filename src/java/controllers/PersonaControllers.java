@@ -35,13 +35,13 @@ public class PersonaControllers {
         return "persona_crear";
     }
     */
-@RequestMapping(method = RequestMethod.GET, value = "personaCrear.htm")
+@RequestMapping(method = RequestMethod.GET, value = "clienteCrear.htm")
     public String processSubmit(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {
 
         System.out.println("personaCrear");
         model.put("mensajePersona", "Pase por el controller de Persona:::"+req.getParameter("nombre"));
-        return "persona_crear";
+        return "cliente-crear";
     }    
     
 @RequestMapping(method = RequestMethod.POST, value = "personaRegistrar.htm")
@@ -82,18 +82,19 @@ public class PersonaControllers {
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.SEVERE, null, "Registrar + " + ident + "-" + insert);
         
         if (insert)
+            
             model.put("mensaje", "El registro fue creado satisfactoriamente!!!");
         else
             model.put("mensaje", "El registro NO fue creado, consulte con el administrador...");
         
-        return "persona_crear";
+        return "cliente-crear";
     }     
     
-@RequestMapping(method = RequestMethod.GET, value = "personaConsultar.htm")
+@RequestMapping(method = RequestMethod.GET, value = "ClienteConsulta.htm")
     public String processSubmit2(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {      
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit2...");
-        return "persona_consultar";
+        return "cliente-consulta";
     } 
     
 @RequestMapping(method = RequestMethod.POST, value = "personaConsultarForm.htm")
@@ -119,18 +120,18 @@ public class PersonaControllers {
         
         model.put("listaPersonas", datos);
         if (datos.size() > 0)
-            model.put("mensaje", "La consulta se realizo satisfactoriamente!!!" + datos.size());
+            model.put("mensaje", "La consulta se realizo satisfactoriamente!!! <br> Datos encontrados: " + datos.size());
         else
             model.put("mensaje", "La consulta NO tiene resultados...");
         
-        return "persona_consultar";
+        return "cliente-consulta";
     }     
     
-@RequestMapping(method = RequestMethod.GET, value = "personaEditar.htm")
+@RequestMapping(method = RequestMethod.GET, value = "ClienteEditar.htm")
     public String processSubmit4(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {      
         Logger.getLogger(PersonaControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit4...");
-        return "persona_editar";
+        return "cliente-editar";
     } 
     
 @RequestMapping(method = RequestMethod.POST, value = "personaEditarForm1.htm")
@@ -157,7 +158,7 @@ public class PersonaControllers {
         model.put("listaPersonas", datos);
         
         
-        return "persona_editar";
+        return "cliente-editar";
         
     }    
     
@@ -203,7 +204,7 @@ public class PersonaControllers {
         else
             model.put("mensaje", "NO se guardaron los cambios...");
         
-        return "persona_editar";
+        return "cliente-editar";
         
     }    
 }

@@ -21,12 +21,12 @@ public class PGPDataSource {
     private static PGPoolingDataSource ds = null;
     
     private PGPDataSource(){
-        ds = new PGPoolingDataSource();
+        ds = new PGPoolingDataSource();    ;
         ds.setServerName("ec2-75-101-133-29.compute-1.amazonaws.com");
         ds.setPortNumber(5432);
         ds.setDatabaseName("danmvgidpbuken");
         ds.setUser("pssmryejgcyavb");
-        ds.setPassword("9d726938b7404aa51ed52419dc595ce0d99ab5d296d9e76d8c070fbcaa3fa18d");        
+        ds.setPassword("9d726938b7404aa51ed52419dc595ce0d99ab5d296d9e76d8c070fbcaa3fa18d");      
     }
     
     public static Connection getConexionBD()
