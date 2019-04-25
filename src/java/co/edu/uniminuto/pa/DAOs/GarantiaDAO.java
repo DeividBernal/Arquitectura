@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author nixoduaa
- */
 public class GarantiaDAO {
     
     
@@ -51,7 +47,7 @@ public class GarantiaDAO {
 
     }
 
-    public ArrayList<Garantia> consultarGarantia(Garantia p, Connection con)
+    public ArrayList<Garantia> consultarGarantia(Connection con, String fecha, String lugar)
     {
         
         ArrayList<Garantia> datos = new ArrayList();
@@ -59,13 +55,28 @@ public class GarantiaDAO {
         Logger.getLogger(GarantiaDAO.class.getName()).log(Level.INFO, "Ejecutando consultarGarantia...");
         
         try {
+            
+            String whereFecha = "";
+            String whereLugar = "";
+            
+            if(fecha != "")
+                whereFecha = " fecha='" + fecha+"'";
+            else
+                whereFecha = " fecha=fecha ";
+            
+            if(lugar != "")
+                whereLugar = " and lugar='" + lugar+"'";
+            else
+                whereLugar = " and lugar=lugar";
+            
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery ("select fecha, lugar, descri, "               
                     + " id_garantia "
                     + " from garantia "
                     + " where "
-                    + " fecha='" + p.getFecha()+"'"
-                    + " AND lugar='"+p.getLugar()+"'");
+                    + whereFecha
+                    + whereLugar);
+                        
             
             while (rs.next())
             { 

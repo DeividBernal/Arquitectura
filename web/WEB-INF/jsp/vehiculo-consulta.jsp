@@ -18,12 +18,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-3 offset-md-3">
                         <label>Nombre del Vehiculo</label>
-                        <input class="form-control" type="text" name="nombre" placeholder="Nombre" required>
+                        <input class="form-control" type="text" name="nombre" placeholder="Nombre">
                     </div>
                     
                     <div class="form-group col-md-3">
                         <label>Costo del vehiculo</label>
-                        <input class="form-control" type="text" name="costo" placeholder="Costo" required>
+                        <input class="form-control" type="text" name="costo" placeholder="Costo">
                     </div>
                     
                     <div class="col-md-12 text-center">

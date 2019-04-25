@@ -5,14 +5,12 @@
  */
 package controllers;
 
-/**
- *
- * @author NixonD
- */
 
 import co.edu.uniminuto.pa.DAOs.VehiculoDAO;
+import co.edu.uniminuto.pa.DTOs.Parametros;
 import co.edu.uniminuto.pa.DTOs.Vehiculo;
 import co.edu.uniminuto.pa.bds.PGPDataSource;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -38,9 +36,15 @@ public class VehiculoControllers {
 @RequestMapping(method = RequestMethod.GET, value = "VehiculosCrear.htm")
     public String processSubmit(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {
-
+        VehiculoDAO pDao = new VehiculoDAO();
+        List<Parametros> paises = pDao.consultarParametros(PGPDataSource.getConexionBD(), 1);
+        List<Parametros> marcas = pDao.consultarParametros(PGPDataSource.getConexionBD(), 2);
+        
         System.out.println("VehiculosCrear");
-        model.put("mensajeVehiculo", "Pase por el controller de Vehiculo:::"+req.getParameter("nombre"));
+        model.put("mensajeVehiculo", "");
+        model.put("paises", paises);
+        model.put("marcas", marcas);
+        
         return "vehiculo-crear";
     }    
     
@@ -93,7 +97,21 @@ public class VehiculoControllers {
 @RequestMapping(method = RequestMethod.GET, value = "VehiculosConsultar.htm")
     public String processSubmit2(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {      
-        Logger.getLogger(VehiculoControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit2...");
+        VehiculoDAO pDao = new VehiculoDAO();
+            
+        Logger.getLogger(VehiculoDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit2...");
+
+        List<Vehiculo> datos = pDao.consultarVehiculo(PGPDataSource.getConexionBD(), "", "");
+
+        Logger.getLogger(VehiculoControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + "" + "-" + datos.size());
+        
+        model.put("listavehiculo", datos);
+        
+        if (datos.size() > 0)
+            model.put("mensaje", "La consulta se realizo satisfactoriamente!!! <br> Datos encontrados: " + datos.size());
+        else
+            model.put("mensaje", "La consulta NO tiene resultados...");
+        
         return "vehiculo-consulta";
     } 
     
@@ -105,16 +123,10 @@ public class VehiculoControllers {
             
         Logger.getLogger(VehiculoDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit3...");
 
-        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
         String nombre = req.getParameter("nombre");
         String costo = req.getParameter("costo");
         
-        Vehiculo p = new Vehiculo();
-        p.setId(id);
-        p.setNombre(nombre);
-        p.setCosto(costo);
-            
-        List<Vehiculo> datos = pDao.consultarVehiculo(p, PGPDataSource.getConexionBD());
+        List<Vehiculo> datos = pDao.consultarVehiculo(PGPDataSource.getConexionBD(), nombre, costo);
 
         Logger.getLogger(VehiculoControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + nombre + "-" + datos.size());
         
@@ -151,7 +163,7 @@ public class VehiculoControllers {
         p.setNombre(nombre);
         p.setCosto(costo);
             
-        List<Vehiculo> datos = pDao.consultarVehiculo(p, PGPDataSource.getConexionBD());
+        List<Vehiculo> datos = pDao.consultarVehiculo(PGPDataSource.getConexionBD(), nombre, costo);
 
         Logger.getLogger(VehiculoControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + nombre + "-" + datos.size());
         

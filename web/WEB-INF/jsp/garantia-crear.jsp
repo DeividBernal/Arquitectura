@@ -15,7 +15,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <form action="GarantiaRegistrar.htm" method="post">
+            <form action="garantiaRegistrar.htm" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>Fecha de compra</label>

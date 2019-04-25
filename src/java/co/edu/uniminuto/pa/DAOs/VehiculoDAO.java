@@ -5,6 +5,7 @@
  */
 package co.edu.uniminuto.pa.DAOs;
 
+import co.edu.uniminuto.pa.DTOs.Parametros;
 import co.edu.uniminuto.pa.DTOs.Vehiculo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,8 +21,6 @@ import java.util.logging.Logger;
  * @author nixoduaa
  */
 public class VehiculoDAO {
-    
-    
     
     public boolean crearVehiculo(Vehiculo p, Connection con)
     {
@@ -43,8 +42,8 @@ public class VehiculoDAO {
             pstmt.setString(7, p.getCilindraje());
             pstmt.setString(8, p.getColor());
             pstmt.setString(9, p.getSillas());
-            pstmt.setString(10, p.getMarca());
-            pstmt.setString(11, p.getPais());
+            pstmt.setInt(10, Integer.parseInt(p.getMarca()));
+            pstmt.setInt(11, Integer.parseInt(p.getPais()));
             
             pstmt.execute();
             
@@ -59,7 +58,7 @@ public class VehiculoDAO {
 
     }
 
-    public ArrayList<Vehiculo> consultarVehiculo(Vehiculo v, Connection con)
+    public ArrayList<Vehiculo> consultarVehiculo(Connection con, String nombre, String costo)
     {
         
         ArrayList<Vehiculo> datos = new ArrayList();
@@ -67,14 +66,30 @@ public class VehiculoDAO {
         Logger.getLogger(VehiculoDAO.class.getName()).log(Level.INFO, "Ejecutando consultarPersona...");
         
         try {
+            
+            String whereNombres = "";
+            String whereCosto = "";
+            
+            if(nombre != "")
+                whereNombres = " nombre='" + nombre+"'";
+            else
+                whereNombres = " nombre=nombre ";
+            
+            if(costo != "")
+                    whereCosto = " and costo='" + costo+"'";
+            else
+                whereCosto = " and costo=costo";
+            
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery ("select nombre, costo, precio, "
                     + " matricula, año, cilindraje, color, sillas, "
-                    + " marca, pais, id_vehiculo "
-                    + " from vehiculo "
+                    + " id_vehiculo, ma.descripcion as marca, pa.descripcion as pais "
+                    + " from vehiculo v "
+                    + " left join marcas ma on ma.idmarca = v.idmarca "
+                    + " left join paises pa on pa.idpais = v.idpais "
                     + " where "
-                    + " nombre='" + v.getNombre()+"'"
-                    + " AND costo='"+v.getCosto()+"'");
+                    + whereNombres
+                    + whereCosto);
             
             while (rs.next())
             { 
@@ -87,9 +102,9 @@ public class VehiculoDAO {
                 veh.setCilindraje(rs.getString(6));
                 veh.setColor(rs.getString(7));
                 veh.setSillas(rs.getString(8));
-                veh.setMarca(rs.getString(9));
-                veh.setPais(rs.getString(10));
-                veh.setId(rs.getInt(11));
+                veh.setId(rs.getInt(9));
+                veh.setMarca(rs.getString(10));
+                veh.setPais(rs.getString(11));
                 
                 datos.add(veh);
                 
@@ -105,13 +120,48 @@ public class VehiculoDAO {
         return datos;
     }
     
+    public ArrayList<Parametros> consultarParametros(Connection con, int tipo)
+    {
+        ArrayList<Parametros> datos = new ArrayList();
+        
+        Logger.getLogger(VehiculoDAO.class.getName()).log(Level.INFO, "Ejecutando consultarPersona...");
+        
+        try {
+            ResultSet rs;
+            Statement s = con.createStatement();
+            
+            if(tipo == 1)
+                rs = s.executeQuery ("select pa.idpais, pa.descripcion "
+                    + " from paises pa order by  pa.descripcion");
+            else
+                rs = s.executeQuery ("select ma.idmarca, ma.descripcion "
+                    + " from marcas ma order by  ma.descripcion");
+            
+            while (rs.next())
+            { 
+                Parametros param = new Parametros();
+                param.setId(rs.getInt(1));
+                param.setDescripcion(rs.getString(2));
+                
+                datos.add(param);
+            }
+            
+            Logger.getLogger(VehiculoDAO.class.getName()).log(Level.INFO, "Ejecutando consultarVehiculo fin..." + datos.size());
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return datos;
+    }
     
     public int obtenerId(Connection con)
     {
         int id = -1;
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery ("select max(id_vehiculo)+1 from vehiculo");
+            ResultSet rs = s.executeQuery ("select max(COALESCE(id_vehiculo, 0))+1 from vehiculo");
             
             while (rs.next())
             { 

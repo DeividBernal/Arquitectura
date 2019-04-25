@@ -35,8 +35,31 @@ public class VentaControllers {
 @RequestMapping(method = RequestMethod.GET, value = "ventaCrear.htm")
     public String processSubmit(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {
+        VentaDAO pDao = new VentaDAO();
+            
+        Logger.getLogger(VentaControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit1...");
 
-        System.out.println("ventaCrear");
+        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
+        String fecha = req.getParameter("fecha");
+        String lugar = req.getParameter("precio");
+        String descri = req.getParameter("descri");
+        
+        Venta p = new Venta();
+        p.setId(id);
+        p.setFecha(fecha);
+        p.setPrecio(lugar);
+        //p.setDescri(descri);
+                                                     
+        boolean insert = pDao.crearVenta(p, PGPDataSource.getConexionBD());
+
+        Logger.getLogger(GarantiaControllers.class.getName()).log(Level.SEVERE, null, "Registrar + " + fecha + "-" + insert);
+        
+        if (insert)
+            
+            model.put("mensaje", "El registro fue creado satisfactoriamente!!!");
+        else
+            model.put("mensaje", "El registro NO fue creado, consulte con el administrador...");
+        
         model.put("mensajeVenta", "Pase por el controller de Venta:::"+req.getParameter("fecha"));
         return "venta-crear";
     }    
@@ -65,7 +88,7 @@ public class VentaControllers {
         v.setMarca(marca);
         v.setDescripcion(descripcion);
         v.setAsesor(asesor);                                  
-        boolean insert = vDao.crearPersona(v, PGPDataSource.getConexionBD());
+        boolean insert = vDao.crearVenta(v, PGPDataSource.getConexionBD());
 
         Logger.getLogger(VentaControllers.class.getName()).log(Level.SEVERE, null, "Registrar + " + fecha + "-" + insert);
         
@@ -81,6 +104,20 @@ public class VentaControllers {
 @RequestMapping(method = RequestMethod.GET, value = "ventaConsulta.htm")
     public String processSubmit2(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {      
+        VentaDAO vDao = new VentaDAO();
+            
+        Logger.getLogger(VentaDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit3...");
+
+        List<Venta> datos = vDao.consultarVenta(PGPDataSource.getConexionBD(), "", "");
+
+        Logger.getLogger(VentaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + "" + "-" + datos.size());
+        
+        model.put("listaVenta", datos);
+        if (datos.size() > 0)
+            model.put("mensaje", "La consulta se realizo satisfactoriamente!!! <br> Datos encontrados: " + datos.size());
+        else
+            model.put("mensaje", "La consulta NO tiene resultados...");
+        
         Logger.getLogger(VentaControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit2...");
         return "venta-consulta";
     } 
@@ -102,7 +139,7 @@ public class VentaControllers {
         v.setFecha(fecha);
         v.setPrecio(precio);
             
-        List<Venta> datos = vDao.consultarVenta(v, PGPDataSource.getConexionBD());
+        List<Venta> datos = vDao.consultarVenta(PGPDataSource.getConexionBD(), fecha, precio);
 
         Logger.getLogger(VentaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + fecha + "-" + datos.size());
         
@@ -139,7 +176,7 @@ public class VentaControllers {
         v.setFecha(fecha);
         v.setPrecio(precio);
             
-        List<Venta> datos = vDao.consultarVenta(v, PGPDataSource.getConexionBD());
+        List<Venta> datos = vDao.consultarVenta(PGPDataSource.getConexionBD(), fecha, precio);
 
         Logger.getLogger(VentaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + fecha + "-" + datos.size());
         

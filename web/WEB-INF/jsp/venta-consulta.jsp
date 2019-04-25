@@ -18,12 +18,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-3 offset-md-3">
                         <label>Fecha</label>
-                        <input class="form-control" type="date" name="fecha" placeholder="Fecha" required>
+                        <input class="form-control" type="date" name="fecha" placeholder="Fecha">
                     </div>
                     
                     <div class="form-group col-md-3">
                         <label>Precio</label>
-                        <input class="form-control" type="text" name="precio" placeholder="Precio" required>
+                        <input class="form-control" type="text" name="precio" placeholder="Precio">
                     </div>
                     
                     <div class="col-md-12 text-center">
@@ -50,12 +50,12 @@
                 <tbody>
                 <c:forEach var="v" items="${listaVenta}">                                           
                     <tr>
-                        <td>${p.getFecha()}</td>
-                        <td>${p.getPrecio()}</td>
-                        <td>${p.getCantidad()}</td>
-                        <td>${p.getMarca()}</td>
-                        <td>${p.getDescripcion()}</td>
-                        <td>${p.getAsesor()}</td>                                                            
+                        <td>${v.getFecha()}</td>
+                        <td>${v.getPrecio()}</td>
+                        <td>${v.getCantidad()}</td>
+                        <td>${v.getMarca()}</td>
+                        <td>${v.getDescripcion()}</td>
+                        <td>${v.getAsesor()}</td>                                                            
                     </tr>
                 </c:forEach>
                 </tbody>

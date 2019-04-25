@@ -76,6 +76,20 @@ public class GarantiaControllers {
 @RequestMapping(method = RequestMethod.GET, value = "GarantiaConsulta.htm")
     public String processSubmit2(HttpServletRequest req, SessionStatus status,ModelMap model) 
     {      
+        GarantiaDAO pDao = new GarantiaDAO();
+            
+        Logger.getLogger(GarantiaDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit3...");
+
+        List<Garantia> datos = pDao.consultarGarantia(PGPDataSource.getConexionBD(), "", "");
+
+        Logger.getLogger(GarantiaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + "" + "-" + datos.size());
+        
+        model.put("listaGarantia", datos);
+        if (datos.size() > 0)
+            model.put("mensaje", "La consulta se realizo satisfactoriamente!!! <br> Datos encontrados: " + datos.size());
+        else
+            model.put("mensaje", "La consulta NO tiene resultados...");
+        
         Logger.getLogger(GarantiaControllers.class.getName()).log(Level.INFO, "Ejecutando processSubmit2...");
         return "garantia-consulta";
     } 
@@ -88,16 +102,10 @@ public class GarantiaControllers {
             
         Logger.getLogger(GarantiaDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit3...");
 
-        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
         String fecha = req.getParameter("fecha");
         String lugar = req.getParameter("lugar");
         
-        Garantia p = new Garantia();
-        p.setId(id);
-        p.setFecha(fecha);
-        p.setLugar(lugar);
-            
-        List<Garantia> datos = pDao.consultarGarantia(p, PGPDataSource.getConexionBD());
+        List<Garantia> datos = pDao.consultarGarantia(PGPDataSource.getConexionBD(), fecha, lugar);
 
         Logger.getLogger(GarantiaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + fecha + "-" + datos.size());
         
@@ -125,21 +133,14 @@ public class GarantiaControllers {
             
         Logger.getLogger(GarantiaDAO.class.getName()).log(Level.INFO, "Ejecutando processSubmit5...");
 
-        int id = pDao.obtenerId(PGPDataSource.getConexionBD());
         String fecha = req.getParameter("fecha");
         String lugar = req.getParameter("lugar");
         
-        Garantia p = new Garantia();
-        p.setId(id);
-        p.setFecha(fecha);
-        p.setLugar(lugar);
-            
-        List<Garantia> datos = pDao.consultarGarantia(p, PGPDataSource.getConexionBD());
+        List<Garantia> datos = pDao.consultarGarantia(PGPDataSource.getConexionBD(), fecha, lugar);
 
         Logger.getLogger(GarantiaControllers.class.getName()).log(Level.SEVERE, null, "Consultar + " + fecha + "-" + datos.size());
         
         model.put("listaGarantia", datos);
-        
         
         return "garantia-editar";
         

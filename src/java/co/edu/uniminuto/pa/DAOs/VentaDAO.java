@@ -15,15 +15,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author nixoduaa
- */
 public class VentaDAO {
     
     
     
-    public boolean crearPersona(Venta v, Connection con)
+    public boolean crearVenta(Venta v, Connection con)
     {
         PreparedStatement pstmt = null;
         boolean respuesta = false;
@@ -55,21 +51,34 @@ public class VentaDAO {
 
     }
 
-    public ArrayList<Venta> consultarVenta(Venta v, Connection con)
+    public ArrayList<Venta> consultarVenta(Connection con, String fecha, String precio)
     {
         
         ArrayList<Venta> datos = new ArrayList();
         
-        Logger.getLogger(VentaDAO.class.getName()).log(Level.INFO, "Ejecutando consultarPersona...");
+        Logger.getLogger(VentaDAO.class.getName()).log(Level.INFO, "Ejecutando consultarVenta...");
         
         try {
+            String whereFecha = "";
+            String wherePrecio = "";
+            
+            if(fecha != "")
+                whereFecha = " fecha='" + fecha+"'";
+            else
+                whereFecha = " fecha=fecha ";
+            
+            if(precio != "")
+                wherePrecio = " and precio='" + precio+"'";
+            else
+                wherePrecio = " and precio=precio";
+            
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery ("select fecha, precio,cantidad, "
                     + " marca, descripcion, asesor, id_venta "
                     + " from venta "
                     + " where "
-                    + " fecha='" + v.getFecha()+"'"
-                    + " AND precio='"+v.getPrecio()+"'");
+                    + whereFecha
+                    + wherePrecio);
             
             while (rs.next())
             { 

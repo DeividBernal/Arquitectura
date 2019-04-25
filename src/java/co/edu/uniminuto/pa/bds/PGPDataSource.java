@@ -26,7 +26,13 @@ public class PGPDataSource {
         ds.setPortNumber(5432);
         ds.setDatabaseName("danmvgidpbuken");
         ds.setUser("pssmryejgcyavb");
-        ds.setPassword("9d726938b7404aa51ed52419dc595ce0d99ab5d296d9e76d8c070fbcaa3fa18d");      
+        ds.setPassword("9d726938b7404aa51ed52419dc595ce0d99ab5d296d9e76d8c070fbcaa3fa18d");     
+        
+        /*ds.setServerName("localhost");
+        ds.setPortNumber(52330);
+        ds.setDatabaseName("danmvgidpbuken");
+        ds.setUser("prueba");
+        ds.setPassword("9d726938b7404aa51ed52419dc595ce0d99ab5d296d9e76d8c070fbcaa3fa18d"); */
     }
     
     public static Connection getConexionBD()

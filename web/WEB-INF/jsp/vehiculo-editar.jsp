@@ -60,32 +60,32 @@
 
                         <div class="form-group col-md-4">
                             <label>Matricula</label>
-                            <input class="form-control" type="text" name="matricula" value="${listavehiculo.get(0).getMatricula()}" >
+                            <input class="form-control" type="text" disabled="true" name="matricula" value="${listavehiculo.get(0).getMatricula()}" >
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Año de fabricación</label>
-                            <input class="form-control" type="date" name="año" value="${listavehiculo.get(0).getAño()}" >
+                            <input class="form-control" type="number" disabled="true" name="año" value="${listavehiculo.get(0).getAño()}" >
                         </div>
                         <div class="form-group col-md-4">
                             <label>Cilindraje</label>
-                            <input class="form-control" type="text" name="cilindraje" value="${listavehiculo.get(0).getCilindraje()}" >
+                            <input class="form-control" type="text" disabled="true" name="cilindraje" value="${listavehiculo.get(0).getCilindraje()}" >
                         </div>
                         <div class="form-group col-md-4">
                             <label>Color</label>
-                            <input class="form-control" type="text" name="color" value="${listavehiculo.get(0).getColor()}" >
+                            <input class="form-control" type="text" disabled="true" name="color" value="${listavehiculo.get(0).getColor()}" >
                         </div>
                         <div class="form-group col-md-4">
                             <label>Numero de sillas</label>
-                            <input class="form-control" type="text" name="sillas" value="${listavehiculo.get(0).getSillas()}" >
+                            <input class="form-control" type="text" disabled="true" name="sillas" value="${listavehiculo.get(0).getSillas()}" >
                         </div>
                         <div class="form-group col-md-4">
                             <label>Marca</label>
-                            <input class="form-control" type="text" name="marca" value="${listavehiculo.get(0).getMarca()}" >
+                            <input class="form-control" type="text" disabled="true" name="marca" value="${listavehiculo.get(0).getMarca()}" >
                         </div>
                         <div class="form-group col-md-4">
                             <label>Pais de fabricación</label>
-                            <input class="form-control" type="text" name="pais" value="${listavehiculo.get(0).getPais()}" >
+                            <input class="form-control" type="text" disabled="true" name="pais" value="${listavehiculo.get(0).getPais()}" >
                         </div>
                     </div>
                     <input type="hidden" name="id" value="${listavehiculo.get(0).getId()}">                                              
